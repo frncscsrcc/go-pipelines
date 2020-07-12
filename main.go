@@ -266,13 +266,14 @@ func createInputStream(input chan interface{}, strings []string) {
 func main() {
 	done := make(chan interface{})
 
-	/*
-		InputA -> [(a1)->(a2)->(2x(slowStep))->(a3)] -> [(b1)->(b2)]-\
-																	  \
-																	   -> [(j1)] -> END
-																	  /
-							  InputC -> [(c1)->(c2)->[1x(slowStep)]-/
-	*/
+    /*
+                               |-concurrent-|
+        InputA -> [(a1)->(a2)->(2x(slowStep))->(a3)] -> [(b1)->(b2)]-\
+                                                                      \
+                                                                       -> [(j1)] -> END
+                                                                      /
+                               InputC -> [(c1)->(c2)->[1x(slowStep)]-/
+    */
 
 	// --- STREAM A from Input channel ---
 	inputA := make(chan interface{})
